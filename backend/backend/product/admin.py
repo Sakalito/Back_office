@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ProduitModel, ProductOwnerModel, CategoryModel
+from .models import ProduitModel
 
 # Register your models here.
 
@@ -12,18 +12,4 @@ class ProduitAdminModel(admin.ModelAdmin):
     list_per_page = 25
 
 
-class ProductOwnerAdminModel(admin.ModelAdmin):
-    list_display = ('id', 'name',)
-    search_fields = ('name',)
-    list_per_page = 25
-
-
-class CategoryAdminModel(admin.ModelAdmin):
-    list_display = ('id', 'name',)
-    search_fields = ('name',)
-    list_per_page = 25
-
-
 admin.site.register(ProduitModel, ProduitAdminModel)
-admin.site.register(ProductOwnerModel, ProductOwnerAdminModel)
-admin.site.register(CategoryModel, CategoryAdminModel)

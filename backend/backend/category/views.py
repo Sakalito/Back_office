@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework import generics, mixins
-from rest_framework import permissions
+from rest_framework import generics, mixins, permissions
 
 from .serializers import CategorySerializer
 from .models import CategoryModel
