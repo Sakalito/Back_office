@@ -1,27 +1,10 @@
 from rest_framework.serializers import ModelSerializer
 
+from owner.serializers import ProductOwnerSerializer
+from category.serializers import CategorySerializer
 from discount.serializers import DiscountSerializer
 
-from .models import CategoryModel, ProductOwnerModel, ProduitModel
-
-
-class CategorySerializer(ModelSerializer):
-    class Meta:
-        model = CategoryModel
-        fields = (
-            "id",
-            "name",
-            "description",
-        )
-
-
-class ProductOwnerSerializer(ModelSerializer):
-    class Meta:
-        model = ProductOwnerModel
-        fields = (
-            "id",
-            "name",
-        )
+from .models import ProduitModel
 
 
 class ProduitSerializer(ModelSerializer):
