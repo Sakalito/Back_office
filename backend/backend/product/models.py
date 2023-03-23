@@ -1,15 +1,12 @@
 from django.db import models
 
+from category.models import CategoryModel
+
 # Create your models here.
 
 
 class ProductOwnerModel(models.Model):
     name = models.CharField(max_length=80)
-
-
-class CategoryModel(models.Model):
-    name = models.CharField(max_length=80)
-    description = models.CharField(max_length=160, blank=True)
 
 
 class ProduitModel(models.Model):

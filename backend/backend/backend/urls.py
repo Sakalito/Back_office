@@ -23,4 +23,6 @@ urlpatterns = [
     path("", include("product.urls")),
     path("", include("discount.urls")),
     path("", include("image.urls")),
+    path("", include("category.urls")),
+    path("", include("owner.urls")),
 ]
