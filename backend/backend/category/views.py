@@ -1,6 +1,8 @@
 from django.shortcuts import render
 
-from rest_framework import generics, mixins, permissions
+from rest_framework import generics, permissions
+
+from backend.mixins import BackendDetailMixin
 
 from .serializers import CategorySerializer
 from .models import CategoryModel
@@ -20,16 +22,6 @@ class CategoryCreateView(generics.CreateAPIView):
     serializer_class = CategorySerializer
 
 
-class CategoryDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+class CategoryDetailView(BackendDetailMixin):
     queryset = CategoryModel.objects.all()
     serializer_class = CategorySerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)

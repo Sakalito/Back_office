@@ -1,6 +1,8 @@
 from django.shortcuts import render
 
-from rest_framework import generics, permissions, mixins
+from rest_framework import generics, permissions
+
+from backend.mixins import BackendDetailMixin
 
 from .models import ProduitModel
 from .serializers import ProduitSerializer
@@ -20,19 +22,6 @@ class ProductCreateView(generics.CreateAPIView):
     serializer_class = ProduitSerializer
 
 
-class ProductDetailView(generics.GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
-    permission_classes = (permissions.IsAuthenticated,)
+class ProductDetailView(BackendDetailMixin):
     queryset = ProduitModel.objects.all()
     serializer_class = ProduitSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-    
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
