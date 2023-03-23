@@ -16,3 +16,9 @@ class ProduitModel(models.Model):
         ProductOwnerModel, on_delete=models.DO_NOTHING, related_name='products')
     category = models.ForeignKey(
         CategoryModel, on_delete=models.DO_NOTHING, related_name='products')
+    
+    def discount(self):
+        return self.discounts.order_by('start_date').last()
+    
+    def __str__(self):
+        return f'{self.name} of {self.owner} in {self.category} at {self.price} per {self.unit}'

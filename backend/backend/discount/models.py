@@ -10,4 +10,7 @@ class DiscountModel(models.Model):
     rate = models.FloatField()
     start_date = models.DateTimeField(blank=True, null=True, auto_now_add=True)
     end_date = models.DateTimeField(blank=True, null=True)
-    product = models.ForeignKey(ProduitModel, related_name='discounts', on_delete=models.DO_NOTHING)
+    product = models.ForeignKey(ProduitModel, related_name='discounts', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.name} of {self.rate} on {self.product}'
