@@ -1,4 +1,7 @@
 from rest_framework.serializers import ModelSerializer
+
+from discount.serializers import DiscountSerializer
+
 from .models import CategoryModel, ProductOwnerModel, ProduitModel
 
 
@@ -24,6 +27,7 @@ class ProductOwnerSerializer(ModelSerializer):
 class ProduitSerializer(ModelSerializer):
     category = CategorySerializer()
     owner = ProductOwnerSerializer()
+    discount = DiscountSerializer()
 
     class Meta:
         model = ProduitModel

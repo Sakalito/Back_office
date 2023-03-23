@@ -13,7 +13,6 @@ class CategoryModel(models.Model):
 
 
 class ProduitModel(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=80)
     comments = models.CharField(max_length=150, blank=True)
     unit = models.CharField(max_length=12)
