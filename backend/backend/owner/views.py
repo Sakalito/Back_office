@@ -2,8 +2,6 @@ from django.shortcuts import render
 
 from rest_framework import generics, permissions, mixins
 
-from backend.mixins import BackendDetailMixin
-
 from .models import ProductOwnerModel
 from .serializers import ProductOwnerSerializer
 
@@ -22,6 +20,6 @@ class ProductOwnerCreateView(generics.CreateAPIView):
     serializer_class = ProductOwnerSerializer
 
 
-class ProductOwnerDetailView(BackendDetailMixin):
+class ProductOwnerDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ProductOwnerModel.objects.all()
     serializer_class = ProductOwnerSerializer

@@ -6,7 +6,7 @@ from product.models import ProduitModel
 
 
 class ImageModel(models.Model):
-    alt = models.CharField(max_length=80)
+    alt = models.CharField(max_length=80, blank=True)
     img = models.ImageField(upload_to='images/')
     product = models.ForeignKey(
         ProduitModel, on_delete=models.DO_NOTHING, related_name='images')

@@ -2,8 +2,6 @@ from django.shortcuts import render
 
 from rest_framework import generics, mixins, permissions
 
-from backend.mixins import BackendDetailMixin
-
 from .models import DiscountModel
 from .serializers import DiscountSerializer
 
@@ -32,6 +30,6 @@ class DiscountCreateView(generics.CreateAPIView):
     serializer_class = DiscountSerializer
 
 
-class DiscountDetailView(BackendDetailMixin):
+class DiscountDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = DiscountModel.objects.all()
     serializer_class = DiscountSerializer
