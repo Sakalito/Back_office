@@ -1,19 +1,12 @@
 from django.db import models
 
+from owner.models import ProductOwnerModel
+from category.models import CategoryModel
+
 # Create your models here.
 
 
-class ProductOwnerModel(models.Model):
-    name = models.CharField(max_length=80)
-
-
-class CategoryModel(models.Model):
-    name = models.CharField(max_length=80)
-    description = models.CharField(max_length=160, blank=True)
-
-
 class ProduitModel(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=80)
     comments = models.CharField(max_length=150, blank=True)
     unit = models.CharField(max_length=12)
@@ -23,3 +16,9 @@ class ProduitModel(models.Model):
         ProductOwnerModel, on_delete=models.DO_NOTHING, related_name='products')
     category = models.ForeignKey(
         CategoryModel, on_delete=models.DO_NOTHING, related_name='products')
+    
+    def discount(self):
+        return self.discounts.order_by('start_date').last()
+    
+    def __str__(self):
+        return f'{self.name} of {self.owner} in {self.category} at {self.price} per {self.unit}'

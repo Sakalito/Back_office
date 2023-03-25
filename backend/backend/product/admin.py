@@ -1,9 +1,15 @@
 from django.contrib import admin
 
-from .models import ProduitModel, ProductOwnerModel, CategoryModel
+from .models import ProduitModel
 
 # Register your models here.
 
-admin.site.register(ProduitModel)
-admin.site.register(ProductOwnerModel)
-admin.site.register(CategoryModel)
+
+class ProduitAdminModel(admin.ModelAdmin):
+    list_display = ('id', 'name', 'price', 'category', 'owner',)
+    list_filter = ('category', 'owner')
+    search_fields = ('name', 'price', 'category', 'owner')
+    list_per_page = 25
+
+
+admin.site.register(ProduitModel, ProduitAdminModel)
