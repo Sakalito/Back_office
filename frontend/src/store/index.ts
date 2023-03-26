@@ -42,10 +42,15 @@ export type Product = {
   owner: ProductOwner;
 };
 
+export type Result = {
+  code: number;
+  message: string;
+  state: boolean;
+};
+
 export default createStore({
   state: {
     fishes: [],
-    isAuthentified: false,
     user: {} as User,
   },
   getters: {
@@ -53,7 +58,8 @@ export default createStore({
       return state.fishes;
     },
     isAuthentified(state) {
-      return state.isAuthentified;
+      // return localStorage.getItem("access") !== null;
+      return false;
     },
     user(state) {
       return state.user;
@@ -69,7 +75,10 @@ export default createStore({
   },
   actions: {
     // login user and store access and refresh tokens in local storage
-    login(context, credentials: { username: string; password: string }) {
+    login(
+      context,
+      credentials: { username: string; password: string }
+    ): Promise<Result> {
       return fetch(endPoints.login, {
         method: "POST",
         headers: {
@@ -77,15 +86,32 @@ export default createStore({
         },
         body: JSON.stringify(credentials),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          } else {
+            throw new Error("invalid credentials");
+          }
+        })
         .then((data) => {
+          console.log("data: ", data);
           console.log("login successful");
           localStorage.setItem("access", data.access);
           localStorage.setItem("refresh", data.refresh);
-          context.commit("setIsAuthentified", true);
-          return data;
+          return {
+            code: 200,
+            message: "login successful",
+            state: true,
+          };
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          return {
+            code: 401,
+            message: "invalid credentials",
+            state: false,
+          };
+        });
     },
 
     // fetch user info from backend and store it in local storage

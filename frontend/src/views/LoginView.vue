@@ -66,13 +66,32 @@ export default defineComponent({
         return;
       }
       console.log("Logging in");
-      this.login({ username: this.username, password: this.password });
+      this.login({ username: this.username, password: this.password }).then(
+        (result) => {
+          if (result.state) {
+            this.$router.push({ name: "dashboard" });
+          }
+          /* this.$toasted.show(result.message, {
+            position: "bottom-center",
+            duration: 5000,
+            theme: "bubble",
+            type: result.state ? "success" : "error",
+          }); */
+        }
+      );
     },
   },
 });
 </script>
 
 <style>
+body {
+  background-color: #f5f5fa;
+  display: block;
+  align-items: center;
+  height: 100%;
+}
+
 .login_title {
   margin-bottom: 10px;
 }
@@ -81,7 +100,9 @@ export default defineComponent({
   align-self: center;
   align-content: center;
   display: inline-block;
-  margin-top: 17.5%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: #d4dfe0 0px 0px 5px;
 }
 
 .login_content {

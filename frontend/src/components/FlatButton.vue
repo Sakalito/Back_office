@@ -2,8 +2,8 @@
   <span
     class="flat_button"
     :class="{
-      elevated: elevate,
       reacting: loading,
+      elevated: elevate,
     }"
     @click="react"
   >
@@ -64,9 +64,8 @@ export default defineComponent({
 .flat_button {
   cursor: pointer;
   color: #fff;
-  background-color: #0051ff;
+  background-color: #7070ff;
   width: 250px;
-  margin: 5px;
   padding: 10px 15px;
   border-radius: 10px;
   margin: 10px 5px;
@@ -74,14 +73,14 @@ export default defineComponent({
 }
 
 .flat_button:hover {
-  color: #0051ff;
+  color: #7070ff;
   background-color: #fff;
-  border: 1px solid #7da6ff;
+  border: 1px solid #7070ff;
   box-shadow: none;
 }
 
 .elevated {
-  box-shadow: #8c7fac 0px 2px 2.5px;
+  box-shadow: #8c7fac 0px 0px 2.5px;
 }
 
 .loading {
