@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <div class="login_content">
+    <div class="login_content container">
       <h2 class="login_title">Connexion</h2>
       <TextField
         :onChange="setUsername"
@@ -17,6 +17,13 @@
       />
       <FlatButton text="Se connecter" :onTap="onLogin"></FlatButton>
     </div>
+  </div>
+  <div
+    class="error container"
+    :class="{ toast: error.length > 0 }"
+    v-if="error"
+  >
+    {{ error }}
   </div>
 </template>
 
@@ -35,6 +42,7 @@ export default defineComponent({
     return {
       username: "",
       password: "",
+      error: "",
     };
   },
   methods: {
@@ -57,6 +65,11 @@ export default defineComponent({
       }
       return null;
     },
+    async showErrorMessage(message: string) {
+      this.error = message;
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      this.error = "";
+    },
     async onLogin() {
       if (
         this.validateUsername(this.username) ||
@@ -70,6 +83,8 @@ export default defineComponent({
         (result) => {
           if (result.state) {
             this.$router.push({ name: "dashboard" });
+          } else {
+            this.showErrorMessage(result.message);
           }
           /* this.$toasted.show(result.message, {
             position: "bottom-center",
@@ -97,17 +112,37 @@ body {
 }
 
 .login {
-  align-self: center;
-  align-content: center;
-  display: inline-block;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: #d4dfe0 0px 0px 5px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .login_content {
   border: 1px solid #d4dfe0;
   border-radius: 10px;
-  padding: 5px 20px 20px 20px;
+  padding: 5px 20px 15px 20px;
+}
+
+.container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: #d4dfe0 0px 0px 5px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  padding: 12.5px;
+  position: absolute;
+  margin-bottom: 5%;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.toast {
+  animation: 1s ease-out 2s fadeOut forwards;
 }
 </style>

@@ -4,23 +4,27 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default defineComponent({
   name: "DeciderView",
   components: {},
-  beforeCreate(): void {
-    console.log("Deciding...");
-    if (this.isAuthenticated) {
-      console.log("Authenticated");
-      this.$router.push({ name: "dashboard" });
-    } else {
-      console.log("Waiting for authentication");
-      this.$router.push({ name: "login" });
-    }
+  async created(): Promise<void> {
+    console.log("Deciding...", this.isAuthenticated());
+    await this.verifyAuthentication();
   },
-  computed: {
-    ...mapGetters(["isAuthenticated"]),
+  methods: {
+    ...mapActions(["isAuthenticated"]),
+    async verifyAuthentication() {
+      console.log("Verifying authentication");
+      if (await this.isAuthenticated()) {
+        console.log("Authenticated");
+        this.$router.push({ name: "dashboard" });
+      } else {
+        console.log("Waiting for authentication");
+        this.$router.push({ name: "login" });
+      }
+    },
   },
 });
 </script>

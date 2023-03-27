@@ -57,10 +57,6 @@ export default createStore({
     fishes(state) {
       return state.fishes;
     },
-    isAuthentified(state) {
-      // return localStorage.getItem("access") !== null;
-      return false;
-    },
     user(state) {
       return state.user;
     },
@@ -114,19 +110,41 @@ export default createStore({
         });
     },
 
+    isAuthenticated(context): boolean {
+      // console.log("token: ", localStorage.getItem("access"));
+      return localStorage.getItem("access") !== null;
+      // return false;
+    },
+
     // fetch user info from backend and store it in local storage
-    fetchUser(context) {
+    fetchUser(context): Promise<Result> {
       return fetch(endPoints.user, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("access"),
         },
-      }).then((response) => {
-        if (response.status === 200) {
-          response.json().then((data) => {
-            context.commit("setUser", data);
-          });
-        }
-      });
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            response.json().then((data) => {
+              context.commit("setUser", data);
+            });
+            return {
+              code: 200,
+              message: "user fetched",
+              state: true,
+            };
+          } else {
+            throw new Error("invalid credentials");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          return {
+            code: 401,
+            message: "invalid credentials",
+            state: false,
+          };
+        });
     },
 
     // fetch fishes from backend and store them in local storage
