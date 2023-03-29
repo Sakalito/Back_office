@@ -1,57 +1,12 @@
 import endPoints from "@/ressources/constants";
+import { Result, StockMove, User } from "@/types";
 import { createStore } from "vuex";
-
-export type User = {
-  id: number;
-  username: string;
-  email?: string;
-  first_name?: string;
-  last_name?: string;
-};
-
-export type ProductOwner = {
-  id: number;
-  name: string;
-};
-
-export type Category = {
-  id: number;
-  name: string;
-  description?: string;
-};
-
-export type Discount = {
-  id: number;
-  name?: string;
-  description?: string;
-  rate: number;
-  startDate: Date;
-  endDate?: Date;
-};
-
-export type Product = {
-  id: number;
-  name: string;
-  category: Category;
-  price: number;
-  unit: string;
-  availability: boolean;
-  sale: boolean;
-  discount: Discount;
-  comments: string;
-  owner: ProductOwner;
-};
-
-export type Result = {
-  code: number;
-  message: string;
-  state: boolean;
-};
 
 export default createStore({
   state: {
     fishes: [],
     user: {} as User,
+    stock: [] as StockMove[],
   },
   getters: {
     fishes(state) {
@@ -59,6 +14,9 @@ export default createStore({
     },
     user(state) {
       return state.user;
+    },
+    stock(state) {
+      return state.stock;
     },
   },
   mutations: {
@@ -94,6 +52,7 @@ export default createStore({
           console.log("login successful");
           localStorage.setItem("access", data.access);
           localStorage.setItem("refresh", data.refresh);
+          context.dispatch("fetchUser");
           return {
             code: 200,
             message: "login successful",
@@ -110,7 +69,7 @@ export default createStore({
         });
     },
 
-    isAuthenticated(context): boolean {
+    isAuthenticated(): boolean {
       // console.log("token: ", localStorage.getItem("access"));
       return localStorage.getItem("access") !== null;
       // return false;
@@ -144,6 +103,33 @@ export default createStore({
             message: "invalid credentials",
             state: false,
           };
+        });
+    },
+
+    // fetch stock movements from backend and store them in local storage
+    fetchStock(context): Promise<StockMove[]> {
+      console.log("loading stock...");
+      return fetch(endPoints.stock, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access"),
+        },
+      })
+        .then((response) => {
+          console.log("responsed status: ", response.status);
+          if (response.status === 200) {
+            console.log("setting stock");
+            return response.json().then((data) => {
+              return (context.state.stock = data.map((item: any) => {
+                return StockMove.fromJson(item);
+              }));
+            });
+          } else {
+            throw new Error("invalid credentials");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          return [];
         });
     },
 

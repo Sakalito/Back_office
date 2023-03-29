@@ -44,10 +44,9 @@ export default defineComponent({
     };
   },
   methods: {
-    react() {
+    react(): void {
       if (this.loading) {
         console.log("Already reacting");
-        return;
       } else {
         console.log("reacting");
         this.loading = true;

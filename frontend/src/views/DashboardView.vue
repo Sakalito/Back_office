@@ -1,16 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <AppBarView title="Dashboard" />
+    <div class="content">
+      <div class="subtitle">Bienvenue sur la page d'accueil</div>
+      <StatsView />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapActions } from "vuex";
+import AppBarView from "@/components/AppBar.vue";
+import StatsView from "@/components/Stats.vue";
 
 export default defineComponent({
   name: "DashboardView",
-  components: {},
+  components: {
+    AppBarView,
+    StatsView,
+  },
   async created(): Promise<void> {
     console.log("Redeciding...");
     if (!(await this.isAuthenticated())) {
@@ -24,3 +33,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+body {
+  background-color: #f5f5fa;
+}
+</style>
