@@ -32,6 +32,7 @@ class StockMoveSerializer(serializers.ModelSerializer):
             "id",
             "date",
             "type",
+            "price",
             "products",
         )
 
@@ -41,6 +42,8 @@ class StockMoveSerializer(serializers.ModelSerializer):
         for item_data in items_data:
             StockMoveItemModel.objects.create(
                 stock_move=stock_move, **item_data)
+        if 'price' not in validated_data:
+            stock_move.calculate_update_price()
         return stock_move
 
     items_field_name = "products"  # "items"

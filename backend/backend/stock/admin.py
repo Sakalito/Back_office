@@ -13,7 +13,7 @@ class StockMoveItemAdminModel(admin.ModelAdmin):
 
 
 class StockMoveAdminModel(admin.ModelAdmin):
-    list_display = ('id', 'date', 'type',)
+    list_display = ('id', 'date', 'price', 'type',)
     list_filter = ('date', 'type',)
     search_fields = ('date', 'type',)
     list_per_page = 25
