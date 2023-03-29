@@ -2,7 +2,8 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import DeciderView from "../views/DeciderView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import LoginView from "../views/LoginView.vue";
-
+import ListProductView from "../views/ListProductView.vue";
+import ProductPageView from "../views/ProductPageView.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -27,6 +28,17 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/products",
+    name: "products",
+    component: ListProductView,
+  },
+  {
+    path: "/product/:id",
+    name: "ProductPage",
+    component: ProductPageView,
+    props: true,
   },
 ];
 
