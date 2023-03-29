@@ -1,7 +1,6 @@
 <template>
   <meta charset="UTF-8" />
   <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
-
   <!-- Boxicons CDN Link -->
   <link
     href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
@@ -11,37 +10,18 @@
 
   <div class="parent">
     <div class="sidebar">
-      <div class="logo-details">
-        <i class="bx bxl-c-plus-plus icon"></i>
-        <div class="logo_name">CodingLab</div>
-        <i class="bx bx-chip" id="btn"></i>
-      </div>
       <ul class="nav-list">
         <li>
-          <i class="bx bx-downvote"></i>
-
+          <i class="bx bx-search"></i>
+          <input type="text" placeholder="Search..." />
           <span class="tooltip">Search</span>
         </li>
         <li>
           <a href="#">
-            <i class="bx bx-chevron-left"></i>
+            <i class="bx bx-grid-alt"></i>
             <span class="links_name">Dashboard</span>
           </a>
           <span class="tooltip">Dashboard</span>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-user"></i>
-            <span class="links_name">User</span>
-          </a>
-          <span class="tooltip">User</span>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-chat"></i>
-            <span class="links_name">Messages</span>
-          </a>
-          <span class="tooltip">Messages</span>
         </li>
         <li>
           <a href="#">
@@ -49,20 +29,6 @@
             <span class="links_name">Analytics</span>
           </a>
           <span class="tooltip">Analytics</span>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-folder"></i>
-            <span class="links_name">File Manager</span>
-          </a>
-          <span class="tooltip">Files</span>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-cart-alt"></i>
-            <span class="links_name">Order</span>
-          </a>
-          <span class="tooltip">Order</span>
         </li>
         <li>
           <a href="#">
@@ -93,38 +59,32 @@
 
     <section class="parent">
       <div class="glass">
-        <img
-          src="https://img-3.journaldesfemmes.fr/o9i71cyz5KzG1Wy9VZHG7IWzbM0=/1240x/smart/844274d6883f4e77962670feace5ff3f/ccmcms-jdf/36614849.jpg"
-          alt="tajine"
-        />
+        <img src="{product.images}" />
       </div>
       <div class="glass">
+        <h1>{{ product }}</h1>
         <h1>{{ product.name }}</h1>
-
-        <!-- {{ product.find(item => item.id === ID) }} -->
-
-        <br />
+        <p>{{ product.price }}€</p>
         <br />
         <div style="text-align: center">
-          <h2>titre</h2>
-
-          <input type="text" /> <button>BOUTTON</button>
-          <button>BOUTTON</button>
+          <h2>Modification du stock</h2>
+          <input style="display: block; margin: auto" type="text" />
+          <button>Ajouter</button>
+          <button>Supprimer</button>
         </div>
 
         <br />
         <br />
 
         <div style="text-align: center">
-          <h2>titre</h2>
-          <input type="text" /> <button>BOUTTON</button>
+          <h2>Gestion de la promotion</h2>
+          <input type="text" style="display: block; margin: auto" />
+          <button>Enregistrer</button>
         </div>
         <br />
         <br />
         <p>
-          blablabla bla bla bla bla blalablabla bla bla bla bla blalablabla bla
-          bla bla bla blalablabla bla bla bla bla blalablabla bla bla bla bla
-          bla
+          {{ product.description }}
         </p>
       </div>
     </section>
@@ -133,12 +93,6 @@
 
 <style>
 .glass {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4.5px);
-  -webkit-backdrop-filter: blur(4.5px);
-  border-radius: 0px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 img {
@@ -148,7 +102,6 @@ img {
 }
 
 .parent {
-  background-image: url("https://wallpapers.com/images/hd/light-blue-white-gradient-ocp1nxf9y5f7ae47.jpg");
   display: grid;
   grid-template-columns: repeat(2, 50vw);
   grid-template-rows: 100vw;
@@ -158,14 +111,12 @@ img {
 
 /* Google Font Link */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
 .sidebar {
   position: fixed;
   left: 0;
@@ -177,23 +128,19 @@ img {
   z-index: 99;
   transition: all 0.5s ease;
 }
-
 .sidebar.open {
   width: 250px;
 }
-
 .sidebar .logo-details {
   height: 60px;
   display: flex;
   align-items: center;
   position: relative;
 }
-
 .sidebar .logo-details .icon {
   opacity: 0;
   transition: all 0.5s ease;
 }
-
 .sidebar .logo-details .logo_name {
   color: #fff;
   font-size: 20px;
@@ -201,12 +148,10 @@ img {
   opacity: 0;
   transition: all 0.5s ease;
 }
-
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name {
   opacity: 1;
 }
-
 .sidebar .logo-details #btn {
   position: absolute;
   top: 50%;
@@ -219,11 +164,9 @@ img {
   cursor: pointer;
   transition: all 0.5s ease;
 }
-
 .sidebar.open .logo-details #btn {
   text-align: right;
 }
-
 .sidebar i {
   color: #fff;
   height: 60px;
@@ -232,19 +175,16 @@ img {
   text-align: center;
   line-height: 60px;
 }
-
 .sidebar .nav-list {
   margin-top: 20px;
   height: 100%;
 }
-
 .sidebar li {
   position: relative;
   margin: 8px 0;
   list-style: none;
 }
-
-ID .sidebar li .tooltip {
+.sidebar li .tooltip {
   position: absolute;
   top: -20px;
   left: calc(100% + 15px);
@@ -260,7 +200,6 @@ ID .sidebar li .tooltip {
   pointer-events: none;
   transition: 0s;
 }
-
 .sidebar li:hover .tooltip {
   opacity: 1;
   pointer-events: auto;
@@ -268,11 +207,9 @@ ID .sidebar li .tooltip {
   top: 50%;
   transform: translateY(-50%);
 }
-
 .sidebar.open li .tooltip {
   display: none;
 }
-
 .sidebar input {
   font-size: 15px;
   color: #fff;
@@ -286,12 +223,10 @@ ID .sidebar li .tooltip {
   transition: all 0.5s ease;
   background: #1d1b31;
 }
-
 .sidebar.open input {
   padding: 0 20px 0 50px;
   width: 100%;
 }
-
 .sidebar .bx-search {
   position: absolute;
   top: 50%;
@@ -301,17 +236,14 @@ ID .sidebar li .tooltip {
   background: #1d1b31;
   color: #fff;
 }
-
 .sidebar.open .bx-search:hover {
   background: #1d1b31;
   color: #fff;
 }
-
 .sidebar .bx-search:hover {
   background: #fff;
   color: #11101d;
 }
-
 .sidebar li a {
   display: flex;
   height: 100%;
@@ -322,11 +254,9 @@ ID .sidebar li .tooltip {
   transition: all 0.4s ease;
   background: #11101d;
 }
-
 .sidebar li a:hover {
   background: #fff;
 }
-
 .sidebar li a .links_name {
   color: #fff;
   font-size: 15px;
@@ -336,25 +266,21 @@ ID .sidebar li .tooltip {
   pointer-events: none;
   transition: 0.4s;
 }
-
 .sidebar.open li a .links_name {
   opacity: 1;
   pointer-events: auto;
 }
-
 .sidebar li a:hover .links_name,
 .sidebar li a:hover i {
   transition: all 0.5s ease;
   color: #11101d;
 }
-
 .sidebar li i {
   height: 50px;
   line-height: 50px;
   font-size: 18px;
   border-radius: 12px;
 }
-
 .sidebar li.profile {
   position: fixed;
   height: 60px;
@@ -366,17 +292,14 @@ ID .sidebar li .tooltip {
   transition: all 0.5s ease;
   overflow: hidden;
 }
-
 .sidebar.open li.profile {
   width: 250px;
 }
-
 .sidebar li .profile-details {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
 }
-
 .sidebar li img {
   height: 45px;
   width: 45px;
@@ -384,7 +307,6 @@ ID .sidebar li .tooltip {
   border-radius: 6px;
   margin-right: 10px;
 }
-
 .sidebar li.profile .name,
 .sidebar li.profile .job {
   font-size: 15px;
@@ -392,11 +314,9 @@ ID .sidebar li .tooltip {
   color: #fff;
   white-space: nowrap;
 }
-
 .sidebar li.profile .job {
   font-size: 12px;
 }
-
 .sidebar .profile #log_out {
   position: absolute;
   top: 50%;
@@ -409,12 +329,10 @@ ID .sidebar li .tooltip {
   border-radius: 0px;
   transition: all 0.5s ease;
 }
-
 .sidebar.open .profile #log_out {
   width: 50px;
   background: none;
 }
-
 .home-section {
   position: relative;
   background: #e4e9f7;
@@ -425,12 +343,10 @@ ID .sidebar li .tooltip {
   transition: all 0.5s ease;
   z-index: 2;
 }
-
 .sidebar.open ~ .home-section {
   left: 250px;
   width: calc(100% - 250px);
 }
-
 .home-section .text {
   display: inline-block;
   color: #11101d;
@@ -438,7 +354,6 @@ ID .sidebar li .tooltip {
   font-weight: 500;
   margin: 18px;
 }
-
 @media (max-width: 420px) {
   .sidebar li .tooltip {
     display: none;
