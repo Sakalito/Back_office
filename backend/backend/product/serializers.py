@@ -10,7 +10,7 @@ from owner.models import ProductOwnerModel
 from category.models import CategoryModel
 from discount.models import DiscountModel
 
-from .models import ProduitModel
+from .models import ProductModel
 
 
 class ProduitSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class ProduitSerializer(serializers.ModelSerializer):
     # discount = serializers.PrimaryKeyRelatedField(queryset=DiscountModel.objects.all(), required=False)
 
     class Meta:
-        model = ProduitModel
+        model = ProductModel
         fields = (
             "id",
             "name",
@@ -49,8 +49,8 @@ class ProduitSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         discount_data = validated_data.pop("discount", None)
         images_data = validated_data.pop("images", None)
-        
-        product = ProduitModel.objects.create(**validated_data)
+
+        product = ProductModel.objects.create(**validated_data)
 
         if discount_data:
             DiscountModel.objects.create(product=product, **discount_data)

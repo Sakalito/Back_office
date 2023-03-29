@@ -25,4 +25,5 @@ urlpatterns = [
     path("", include("image.urls")),
     path("", include("category.urls")),
     path("", include("owner.urls")),
+    path("", include("stock.urls")),
 ]

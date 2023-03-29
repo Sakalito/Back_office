@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ProduitModel
+from .models import ProductModel
 
 # Register your models here.
 
@@ -12,4 +12,4 @@ class ProduitAdminModel(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(ProduitModel, ProduitAdminModel)
+admin.site.register(ProductModel, ProduitAdminModel)
