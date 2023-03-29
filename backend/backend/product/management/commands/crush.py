@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from product.models import ProduitModel
+from product.models import ProductModel
 
 
 class Command(BaseCommand):
@@ -13,4 +13,4 @@ class Command(BaseCommand):
             'Products crushed successfully!'))
 
     def crush_products(self):
-        ProduitModel.objects.all().delete()
+        ProductModel.objects.all().delete()

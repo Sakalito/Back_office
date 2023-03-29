@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "owner",
     "discount",
     "image",
+    "stock",
 ]
 
 MIDDLEWARE = [
