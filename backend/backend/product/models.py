@@ -1,5 +1,4 @@
 from django.db import models
-
 from owner.models import ProductOwnerModel
 from category.models import CategoryModel
 

@@ -3,9 +3,16 @@
     <header>
       <nav>
         <ul>
-          <li><router-link to="/">Tableau de bord</router-link></li>
-          <li><router-link to="/products">Liste des produits</router-link></li>
-          <li><router-link to="/about">À propos</router-link></li>
+          <li>
+            <router-link to="/" style="color: black"
+              >Tableau de bord</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/products" style="color: black"
+              >Liste des produits</router-link
+            >
+          </li>
         </ul>
       </nav>
     </header>
@@ -25,11 +32,15 @@ header {
   top: 0;
   position: sticky;
   min-height: 50px;
-  background: hwb(190 5% 13% / 0.927);
+  background: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+}
+
+.navigation {
+  color: black;
 }
 
 nav ul {
@@ -39,6 +50,7 @@ nav ul {
 
 nav li {
   margin-right: 20px;
+  color: black;
 }
 
 nav li:last-child {
@@ -76,6 +88,7 @@ body {
   padding: 0;
   font-family: helvetica;
 }
+
 #app {
   height: 100%;
 }
