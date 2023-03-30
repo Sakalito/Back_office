@@ -2,6 +2,8 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import DeciderView from "../views/DeciderView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import LoginView from "../views/LoginView.vue";
+import ProductsView from "../views/ProductsView.vue";
+import ProductDetailsView from "../views/ProductDetailsView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,6 +15,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/dashboard",
     name: "dashboard",
     component: DashboardView,
+  },
+  {
+    path: "/product-detail/:id",
+    name: "product-detail",
+    component: ProductDetailsView,
+    props: true,
+  },
+  {
+    path: "/products",
+    name: "products",
+    component: ProductsView,
   },
   {
     path: "/login",

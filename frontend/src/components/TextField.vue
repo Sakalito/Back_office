@@ -33,10 +33,12 @@ export default defineComponent({
     type: { type: String, default: "text", required: false },
     required: { type: Boolean, default: false, required: false },
     id: { type: String, required: false },
+    value: { type: String, default: "", required: false },
   },
   data() {
+    console.log("this.value: ", this.value);
     return {
-      input: "",
+      input: this.value,
     };
   },
   methods: {
@@ -60,7 +62,7 @@ export default defineComponent({
 </script>
 
 <style>
-input {
+.text_field {
   width: 250px;
   margin: 5px;
   padding: 10px 15px;
