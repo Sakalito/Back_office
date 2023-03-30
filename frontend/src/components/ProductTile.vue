@@ -12,7 +12,7 @@
     </span>
   </td>
   <td class="action_td">
-    <FlatButton :onTap="goToEdit" text="Editer" />
+    <FlatButton id="edit_flat_button" :onTap="goToEdit" text="Editer" />
   </td>
 </template>
 
@@ -44,7 +44,7 @@ export default defineComponent({
     async goToEdit() {
       console.log("go to edit");
       return this.$router.push({
-        name: "edit",
+        name: "product-detail",
         params: { id: this.product?.id },
       });
     },

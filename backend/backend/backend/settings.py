@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 CORS_ALLOWED_ORIGINS = [
     "https://localhost:8080",
     "http://localhost:8080",
+    "http://172.16.4.28:8080"
 ]
 
 # Application definition
@@ -65,8 +66,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "backend.urls"

@@ -34,9 +34,10 @@ export type Product = {
   unit: string;
   availability: boolean;
   sale: boolean;
-  discount: number;
+  discount?: number;
   comments: string;
   owner: string;
+  images?: string[];
 };
 
 export type StockMoveItem = {

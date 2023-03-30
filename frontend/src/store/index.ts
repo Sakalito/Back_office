@@ -146,9 +146,63 @@ export default createStore({
         .catch((err) => console.error(err));
     },
 
+    // update a product in the backend
+    updateProduct(context, product: Partial<Product>): Promise<Result> {
+      console.log("updating product: ", product);
+      return fetch(endPoints.product + product.id + "/", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("access"),
+        },
+        body: JSON.stringify({
+          name: product.name,
+          price: product.price,
+          comments: product.comments,
+          discount: product.discount,
+          availability: product.availability,
+        }),
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            context.dispatch("fetchProducts");
+            return {
+              code: 200,
+              message: "product updated",
+              state: true,
+            };
+          } else {
+            console.error(response.body);
+            throw new Error("invalid credentials");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          return {
+            code: 401,
+            message: "Error updating product",
+            state: false,
+          };
+        });
+    },
+
     // get a product by id
-    getProduct(context, id: number): Product | undefined {
-      return context.state.products.find((product) => product.id === id);
+    async getProduct(context, id: number): Promise<Product | undefined> {
+      console.log("getting product with id: ", id);
+      if (context.state.products.length === 0) {
+        await context.dispatch("fetchProducts");
+      }
+      try {
+        const prod = context.state.products.filter((product) => {
+          // console.log("equal: ", product.id == id);
+          return product.id == id;
+        })[0];
+        console.log("product: ", prod);
+        return prod;
+      } catch (err) {
+        console.error(err);
+        return undefined;
+      }
     },
   },
   modules: {},

@@ -32,6 +32,7 @@
         </div>
         <VueApexCharts
           type="area"
+          :zoom="false"
           height="350"
           ref="chart"
           :options="sumBy.chartOptions"
@@ -393,10 +394,7 @@ export default defineComponent({
 <style>
 .home {
 }
-header {
-  min-height: 120px;
-  background: #3c7a1f;
-}
+
 main {
   overflow-y: hidden;
   font-size: 20px;

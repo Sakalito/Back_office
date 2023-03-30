@@ -1,6 +1,7 @@
 <template>
   <span
     class="flat_button"
+    :id="id"
     :class="{
       reacting: loading,
       elevated: elevate,
@@ -37,6 +38,7 @@ export default defineComponent({
     onTap: { type: Function as PropType<OnTapFunction>, required: true },
     text: { type: String, required: true },
     elevate: { type: Boolean, default: true, required: false },
+    id: { type: String, required: false },
   },
   data() {
     return {
@@ -64,8 +66,8 @@ export default defineComponent({
 .flat_button {
   cursor: pointer;
   color: #fff;
-  background-color: #7070ff;
   width: 250px;
+  background-color: #7070ff;
   padding: 10px 15px;
   border-radius: 10px;
   margin: 10px 5px;

@@ -2,9 +2,13 @@
   <div class="home">
     <AppBarView title="Produits" />
     <div class="bar">
-      <TextField v-bind:onChange="filter" hint="Recherche"></TextField>
-      <FlatButton text="Nouveau" :onTap="goToStock"></FlatButton>
-      <FlatButton text="Stock" :onTap="goToStock"></FlatButton>
+      <TextField
+        id="search_text_field"
+        v-bind:onChange="filter"
+        hint="Recherche"
+      ></TextField>
+      <FlatButton text="Créer un produit" :onTap="goToStock"></FlatButton>
+      <FlatButton text="Gérer le Stock" :onTap="goToStock"></FlatButton>
     </div>
     <!-- FilterBar></FilterBar -->
     <TableView
@@ -23,7 +27,7 @@ import TextField from "../components/TextField.vue";
 import AppBarView from "../components/AppBar.vue";
 import FlatButton from "../components/FlatButton.vue";
 import { defineComponent } from "vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import { Product } from "@/types";
 
 export default defineComponent({
@@ -38,14 +42,14 @@ export default defineComponent({
     return {
       // keys: Object.keys(store.state.fishes[0]),
       keys: [] as string[],
-      products: [] as Product[],
+      // products: [] as Product[],
       filteredProducts: [] as Product[],
       selected: {} as Product,
       expandFields: ["comments", "name"],
     };
   },
   computed: {
-    // ...mapGetters(["products"]),
+    ...mapGetters(["products"]),
   },
   methods: {
     ...mapActions(["fetchProducts"]),
@@ -63,11 +67,10 @@ export default defineComponent({
   },
   mounted() {
     this.fetchProducts().then((products) => {
-      this.products = [];
+      this.filteredProducts = [];
       products.forEach((val: Product) => {
-        this.products.push(Object.assign({}, val));
+        this.filteredProducts.push(Object.assign({}, val));
       });
-      this.filteredProducts = products;
       // this.keys = Object.keys(products[0]);
       this.keys = [
         "id",
@@ -85,8 +88,7 @@ export default defineComponent({
 </script>
 
 <style>
-body {
-  background-color: #fcfcfc;
+.home {
   margin: 1%;
 }
 
@@ -100,13 +102,13 @@ body {
   justify-content: space-evenly;
 }
 
-.flat_button {
+#edit_flat_button {
   width: 60px;
   margin: none;
   text-align: center;
 }
 
-.text_field {
+#search_text_field {
   width: 50%;
   margin: 10px auto;
 }

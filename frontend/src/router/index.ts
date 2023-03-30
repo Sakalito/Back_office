@@ -17,9 +17,10 @@ const routes: Array<RouteRecordRaw> = [
     component: DashboardView,
   },
   {
-    path: "/product-detail",
-    name: "edit",
+    path: "/product-detail/:id",
+    name: "product-detail",
     component: ProductDetailsView,
+    props: true,
   },
   {
     path: "/products",

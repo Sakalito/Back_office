@@ -33,10 +33,12 @@ export default defineComponent({
     type: { type: String, default: "text", required: false },
     required: { type: Boolean, default: false, required: false },
     id: { type: String, required: false },
+    value: { type: String, default: "", required: false },
   },
   data() {
+    console.log("this.value: ", this.value);
     return {
-      input: "",
+      input: this.value,
     };
   },
   methods: {
