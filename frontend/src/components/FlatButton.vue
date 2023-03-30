@@ -4,6 +4,7 @@
     :class="{
       reacting: loading,
       elevated: elevate,
+      text: true,
     }"
     @click="react"
   >

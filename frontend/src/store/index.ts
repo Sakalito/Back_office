@@ -1,16 +1,16 @@
 import endPoints from "@/ressources/constants";
-import { Result, StockMove, User } from "@/types";
+import { Product, Result, StockMove, User } from "@/types";
 import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    fishes: [],
+    products: [] as Product[],
     user: {} as User,
     stock: [] as StockMove[],
   },
   getters: {
-    fishes(state) {
-      return state.fishes;
+    products(state) {
+      return state.products;
     },
     user(state) {
       return state.user;
@@ -20,8 +20,8 @@ export default createStore({
     },
   },
   mutations: {
-    setFishes(state, fishes) {
-      state.fishes = fishes;
+    setProducts(state, products) {
+      state.products = products;
     },
     setUser(state, user) {
       state.user = user;
@@ -134,16 +134,21 @@ export default createStore({
     },
 
     // fetch fishes from backend and store them in local storage
-    fetchFishes(context) {
-      console.log("loading fishes...");
+    fetchProducts(context) {
+      console.log("loading products...");
       return fetch(endPoints.products)
         .then((response) => response.json())
         .then((data) => {
-          context.commit("setFishes", data);
-          console.log(data.length + " fishes loaded");
+          context.commit("setProducts", data);
+          console.log(data.length + " products loaded");
           return data;
         })
         .catch((err) => console.error(err));
+    },
+
+    // get a product by id
+    getProduct(context, id: number): Product | undefined {
+      return context.state.products.find((product) => product.id === id);
     },
   },
   modules: {},

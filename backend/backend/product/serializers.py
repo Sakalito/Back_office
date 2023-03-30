@@ -23,7 +23,8 @@ class ProduitSerializer(serializers.ModelSerializer):
     category = serializers.PrimaryKeyRelatedField(
         queryset=CategoryModel.objects.all(), required=True)
     owner = serializers.PrimaryKeyRelatedField(
-        queryset=ProductOwnerModel.objects.all(), required=True)
+        queryset=ProductOwnerModel.objects.all(), required=False)
+    owner_from_name = serializers.CharField(required=False)
     # discount = serializers.PrimaryKeyRelatedField(queryset=DiscountModel.objects.all(), required=False)
 
     class Meta:
@@ -37,6 +38,7 @@ class ProduitSerializer(serializers.ModelSerializer):
             "comments",
             "category",
             "owner",
+            "owner_from_name",
             "discount",
             "images",
         )
@@ -50,7 +52,16 @@ class ProduitSerializer(serializers.ModelSerializer):
         discount_data = validated_data.pop("discount", None)
         images_data = validated_data.pop("images", None)
 
-        product = ProductModel.objects.create(**validated_data)
+        owner_from_name = validated_data.pop("owner_from_name", None)
+
+        if owner_from_name:
+            owner, _ = ProductOwnerModel.objects.get_or_create(
+                name=owner_from_name)
+            validated_data.pop("owner", None)
+            product = ProductModel.objects.create(
+                owner=owner, **validated_data)
+        else:
+            product = ProductModel.objects.create(**validated_data)
 
         if discount_data:
             DiscountModel.objects.create(product=product, **discount_data)
@@ -62,9 +73,12 @@ class ProduitSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data["category"] = CategorySerializer(instance.category).data
-        data["owner"] = ProductOwnerSerializer(instance.owner).data
-        data["images"] = ImageSerializer(instance.images.all(), many=True).data
-        # discount = DiscountModel.objects.filter(product=instance).order_by("start_date").last()
-        # if discount: data["discount"] = DiscountSerializer(discount).data
+        data["category"] = CategorySerializer(instance.category).data['name']
+        data["owner"] = ProductOwnerSerializer(instance.owner).data['name']
+        data["images"] = [image['id']
+                          for image in ImageSerializer(instance.images.all(), many=True).data]
+        discount = DiscountModel.objects.filter(
+            product=instance).order_by("start_date").last()
+        if discount:
+            data["discount"] = DiscountSerializer(discount).data['rate']
         return data

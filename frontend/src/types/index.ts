@@ -29,14 +29,14 @@ export type Discount = {
 export type Product = {
   id: number;
   name: string;
-  category: Category;
+  category: string;
   price: number;
   unit: string;
   availability: boolean;
   sale: boolean;
-  discount: Discount;
+  discount: number;
   comments: string;
-  owner: ProductOwner;
+  owner: string;
 };
 
 export type StockMoveItem = {
